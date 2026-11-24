@@ -50,6 +50,13 @@ function gate(story: string): void {
       `story has ${sentences.length} sentences, the gate needs exactly two`,
     );
   }
+  // Each counted sentence must actually end on terminal punctuation, so
+  // a trailing fragment without one cannot pass as a second sentence.
+  for (const s of sentences) {
+    if (!/[.!?]$/.test(s)) {
+      throw new Error(`sentence does not end with terminal punctuation: ${s}`);
+    }
+  }
 }
 
 gate(STORY);
